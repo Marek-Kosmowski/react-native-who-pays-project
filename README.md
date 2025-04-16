@@ -1,4 +1,5 @@
 💸 Who Pays? – A Bill Splitter Chooser
+
 This is a simple yet fun mobile app built with React Native (Expo). The app helps you decide who's paying the bill—no more awkward silences or endless debates!
 
 📱 What It Does
