@@ -56,6 +56,16 @@ export default function NamesComponent() {
     return true;
   };
 
+  const removeName = (index) => {
+    let names = state.names;
+
+    names.splice(index, 1);
+
+    handleState({
+      names,
+    });
+  };
+
   return (
     <View style={{ width: '80%' }}>
       {/* INPUT BUTTON */}
@@ -79,11 +89,15 @@ export default function NamesComponent() {
         {/* NAMES LIST */}
         {state.names && (
           <FlatList
+            style={styles.listContainer}
             data={state.names}
             renderItem={({ item, index }) => {
               return (
-                <Pressable>
-                  <Text>{item}</Text>
+                <Pressable
+                  style={styles.nameItem}
+                  onPress={() => removeName(index)}
+                >
+                  <Text style={styles.itemText}>{item}</Text>
                 </Pressable>
               );
             }}
@@ -104,5 +118,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 12,
     backgroundColor: AppStyles.color.white,
+  },
+  nameItem: {
+    borderColor: AppStyles.color.indigoInk,
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 7,
+    alignItems: 'center',
+  },
+  itemText: {
+    padding: 10,
+    fontSize: 25,
+  },
+  listContainer: {
+    marginBottom: 20,
+    maxHeight: 300,
   },
 });
