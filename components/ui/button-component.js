@@ -7,6 +7,7 @@ export default function ButtonComponent(props) {
       style={({ pressed }) => [
         styles.buttonStyle,
         { backgroundColor: pressed ? props.backColorPress : props.backColor },
+        props.customStyle,
       ]}
       {...props}
     >

@@ -79,6 +79,10 @@ export default function NamesComponent() {
     });
   };
 
+  const resetApp = () => {
+    setState(DEFAULTS);
+  };
+
   return (
     <View style={{ width: '80%' }}>
       {/* INPUT BUTTON */}
@@ -117,6 +121,7 @@ export default function NamesComponent() {
             keyExtractor={(item) => item}
           />
         )}
+        {/* GENERATE RESULT BUTTON */}
         {state.names.length > 1 && (
           <ButtonComponent
             backColor={AppStyles.color.indigoInk}
@@ -126,7 +131,7 @@ export default function NamesComponent() {
           />
         )}
       </>
-      <ResultComponent state={state} />
+      <ResultComponent state={state} resetApp={resetApp} />
     </View>
   );
 }
