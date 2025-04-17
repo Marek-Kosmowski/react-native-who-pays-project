@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { AppStyles } from '../constants/styles';
 
 import ButtonComponent from './ui/button-component';
+import ResultComponent from './result-component';
 
 const DEFAULTS = {
   modal: false,
@@ -66,6 +67,18 @@ export default function NamesComponent() {
     });
   };
 
+  const getRandomName = () => {
+    return state.names[Math.floor(Math.random() * state.names.length)];
+  };
+
+  const showResult = () => {
+    let name = getRandomName();
+    handleState({
+      modal: true,
+      result: name,
+    });
+  };
+
   return (
     <View style={{ width: '80%' }}>
       {/* INPUT BUTTON */}
@@ -104,7 +117,16 @@ export default function NamesComponent() {
             keyExtractor={(item) => item}
           />
         )}
+        {state.names.length > 1 && (
+          <ButtonComponent
+            backColor={AppStyles.color.indigoInk}
+            backColorPress={AppStyles.color.prussianBlue}
+            text='Pick a name'
+            onPress={() => showResult()}
+          />
+        )}
       </>
+      <ResultComponent state={state} />
     </View>
   );
 }
