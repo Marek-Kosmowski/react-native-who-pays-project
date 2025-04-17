@@ -1,4 +1,14 @@
-import { Text, View, TextInput, StyleSheet, Button, Alert } from 'react-native';
+import {
+  Text,
+  View,
+  TextInput,
+  StyleSheet,
+  Button,
+  Alert,
+  Keyboard,
+  FlatList,
+  Pressable,
+} from 'react-native';
 import { useState } from 'react';
 import { AppStyles } from '../constants/styles';
 
@@ -15,6 +25,36 @@ export default function NamesComponent() {
   const [state, setState] = useState(DEFAULTS);
 
   const handleInput = (value) => setState({ ...state, inputName: value });
+  const handleState = (props) => setState({ ...state, ...props });
+
+  const addNamesToList = () => {
+    const userName = state.inputName;
+    const validate = validateHandler(userName);
+
+    if (!validate.error) {
+      /// ADD NAME TO ARRAY
+      handleState({
+        names: [...state.names, userName],
+        inputName: '',
+      });
+
+      Keyboard.dismiss();
+    } else {
+      /// SHOW ERROR
+      Alert.alert(validate.message);
+    }
+  };
+
+  const validateHandler = (value) => {
+    if (value === '') {
+      return { error: true, message: `Sorry, name can't be empty.` };
+    }
+
+    if (state.names.includes(value)) {
+      return { error: true, message: 'Sorry, name already exist.' };
+    }
+    return true;
+  };
 
   return (
     <View style={{ width: '80%' }}>
@@ -34,8 +74,22 @@ export default function NamesComponent() {
           backColor={AppStyles.color.indigoInk}
           backColorPress={AppStyles.color.prussianBlue}
           text='Add name'
-          onPress={() => Alert.alert(state.inputName)}
+          onPress={() => addNamesToList()}
         />
+        {/* NAMES LIST */}
+        {state.names && (
+          <FlatList
+            data={state.names}
+            renderItem={({ item, index }) => {
+              return (
+                <Pressable>
+                  <Text>{item}</Text>
+                </Pressable>
+              );
+            }}
+            keyExtractor={(item) => item}
+          />
+        )}
       </>
     </View>
   );
