@@ -6,6 +6,10 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import NamesComponent from './components/names-component';
 import { AppStyles } from './constants/styles';
 
+
+
+
+
 export default function App() {
   return (
     <ImageBackground
